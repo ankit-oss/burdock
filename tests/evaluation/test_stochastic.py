@@ -16,45 +16,45 @@ class TestStochastic:
     def test_dp_predicate_count(self):
         d1_query = "SELECT COUNT(UserId) AS UserCount FROM d1.d1"
         d2_query = "SELECT COUNT(UserId) AS UserCount FROM d2.d2"
-        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=10000)
+        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=500)
         print("Result of DP Predicate Test on COUNT Query: ", dp_res)
         assert(dp_res == True)
 
     def test_dp_predicate_sum(self):
         d1_query = "SELECT SUM(Usage) AS TotalUsage FROM d1.d1"
         d2_query = "SELECT SUM(Usage) AS TotalUsage FROM d2.d2"
-        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=10000)
+        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=500)
         print("Result of DP Predicate Test on SUM Query: ", dp_res)
         assert(dp_res == True)    
     
     def test_dp_predicate_mean(self):
         d1_query = "SELECT AVG(Usage) AS MeanUsage FROM d1.d1"
         d2_query = "SELECT AVG(Usage) AS MeanUsage FROM d2.d2"
-        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=10000)
+        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=500)
         print("Result of DP Predicate Test on MEAN Query: ", dp_res)
         assert(dp_res == True)
 
     def test_dp_predicate_var(self):
         d1_query = "SELECT VAR(Usage) AS UsageVariance FROM d1.d1"
         d2_query = "SELECT VAR(Usage) AS UsageVariance FROM d2.d2"
-        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=10000)
+        dp_res, acc_res = dv.dp_query_test(d1_query, d2_query, plot=False, repeat_count=500)
         print("Result of DP Predicate Test on VAR Query: ", dp_res)
         assert(dp_res == True)
 
     def test_dp_laplace_mechanism_count(self):
-        dp_count, ks_count, ws_count = dv.aggtest(ag.dp_mechanism_count, 'UserId', binsize="auto", debug = False)
+        dp_count, ks_count, ws_count = dv.aggtest(ag.dp_mechanism_count, 'UserId', binsize="auto", plot=False, debug = False)
         assert(dp_count == True)
 
     def test_dp_laplace_mechanism_sum(self):
-        dp_sum, ks_sum, ws_sum = dv.aggtest(ag.dp_mechanism_sum, 'Usage', binsize="auto", debug=False)
+        dp_sum, ks_sum, ws_sum = dv.aggtest(ag.dp_mechanism_sum, 'Usage', binsize="auto", plot=False, debug=False)
         assert(dp_sum == True)
     
     def test_dp_gaussian_mechanism_count(self):
         ag = Aggregation(t=1, repeat_count=10000, mechanism = "Gaussian")
-        dp_count, ks_count, ws_count = dv.aggtest(ag.dp_mechanism_count, 'UserId', binsize="auto", debug = False)
+        dp_count, ks_count, ws_count = dv.aggtest(ag.dp_mechanism_count, 'UserId', binsize="auto", plot=False, debug = False)
         assert(dp_count == True)
     
     def test_dp_gaussian_mechanism_sum(self):
         ag = Aggregation(t=1, repeat_count=10000, mechanism = "Gaussian")
-        dp_sum, ks_sum, ws_sum = dv.aggtest(ag.dp_mechanism_sum, 'Usage', binsize="auto", debug=False)
+        dp_sum, ks_sum, ws_sum = dv.aggtest(ag.dp_mechanism_sum, 'Usage', binsize="auto", plot=False, debug=False)
         assert(dp_sum == True)
